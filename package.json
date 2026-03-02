@@ -2,7 +2,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.11.2",
     "@rsbuild/plugin-react": "^1.4.3",
-    "axios": "^1.13.2",
+    "axios": "^1.13.5",
     "classnames": "^2.5.1",
     "clsx": "^2.1.1",
     "cropperjs": "^2.1.0",
