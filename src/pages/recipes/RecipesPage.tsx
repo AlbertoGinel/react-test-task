@@ -9,6 +9,8 @@ import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { StatusBlock } from '@/shared/ui/StatusBlock/StatusBlock';
 import { loadRecipes, recipesActions, selectVisibleRecipes } from './recipesSlice';
 
+import 'rc-dropdown/assets/index.css';
+
 import styles from './RecipesPage.module.scss';
 import 'rc-menu/assets/index.css';
 
@@ -33,10 +35,13 @@ export function RecipesPage() {
 
   const sortMenu = (
     <Menu
-      onSelect={() => {
-        // Intentionally a no-op.
-        // Interview challenge: implement sorting via API or client-side.
-      }}
+    onSelect={(info) => {
+      if (info.key === 'name:asc') {
+        dispatch(recipesActions.sortRecipes(true));
+      } else if (info.key === 'name:desc') {
+        dispatch(recipesActions.sortRecipes(false));
+      }
+    }}
     >
       <MenuItem key="name:asc">Name ↑ (TODO)</MenuItem>
       <MenuItem key="name:desc">Name ↓ (TODO)</MenuItem>

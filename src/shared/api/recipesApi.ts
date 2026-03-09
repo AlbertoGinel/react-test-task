@@ -14,7 +14,7 @@ export type RecipesListResponse = {
 };
 
 export async function getRecipes(params: { limit: number; skip: number }) {
-  const res = await http.get<RecipesListResponse>('/recipes', { params });
+  const res = await http.get<RecipesListResponse>('/recipes?sortBy=name&order=asc', { params });
   return res.data;
 }
 

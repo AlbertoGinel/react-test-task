@@ -56,6 +56,16 @@ const slice = createSlice({
       state.pageSize = action.payload;
       state.page = 1;
     },
+    reverseRecipes(state) {
+    state.items = state.items.slice().reverse();
+    },
+    sortRecipes(state, action: PayloadAction<boolean>) {
+  const isAscending = action.payload;
+  state.items = state.items.slice().sort((a, b) => {
+    const result = a.name.localeCompare(b.name);
+    return isAscending ? result : -result;
+  });
+},
   },
   extraReducers: (b) => {
     b.addCase(loadRecipes.pending, (state) => {
@@ -63,10 +73,12 @@ const slice = createSlice({
       state.error = null;
     });
     b.addCase(loadRecipes.fulfilled, (state, action) => {
-      state.status = 'succeeded';
-      state.items = action.payload.recipes;
-      state.total = action.payload.total;
-    });
+  state.status = 'succeeded';
+  state.items = action.payload.recipes.slice().sort((a, b) => 
+    a.name.localeCompare(b.name)
+  );
+  state.total = action.payload.total;
+});
     b.addCase(loadRecipes.rejected, (state, action) => {
       state.status = 'failed';
       state.error = action.error.message ?? 'Request failed';
@@ -83,3 +95,4 @@ export const selectVisibleRecipes = (state: RootState) => {
   if (!q) return state.recipes.items;
   return state.recipes.items.filter((r) => r.name.toLowerCase().includes(q));
 };
+
